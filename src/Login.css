@@ -1,0 +1,21 @@
+.login {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  width: 100%;
+  background-color: #2f3135;
+}
+.imageDiscord {
+  height: 300px;
+  object-fit: contain;
+}
+.login > button {
+  width: 300px;
+  background-color: #738adb;
+  color: #eff2f5;
+  font-weight: 800;
+}
+.login > button > :hover {
+  background-color: #c7d1f5;
+  color: #738adb;
+}
