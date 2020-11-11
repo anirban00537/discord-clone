@@ -16,6 +16,14 @@ import db, { auth } from "./firebase";
 const Sidebar = () => {
   const user = useSelector(selectUser);
   const [channels, setChannels] = useState([]);
+  const addChannel = () => {
+    const channelName = prompt("Enter a Channel Name");
+    if (channelName) {
+      db.collection("channels").add({
+        channelName: channelName,
+      });
+    }
+  };
   useEffect(() => {
     db.collection("channels").onSnapshot((snapshot) => {
       setChannels(
@@ -25,12 +33,14 @@ const Sidebar = () => {
         }))
       );
     });
+
+    console.log("channel list", channels);
   }, []);
   console.log(user);
   return (
     <div className="sidebar">
       <div className="sidebar__top">
-        <h3>Clever Programmer</h3>
+        <h3>Discuss</h3>
         <ExpandMoreIcon />
       </div>
 
@@ -40,11 +50,17 @@ const Sidebar = () => {
             <ExpandMoreIcon />
             <h4>Text Channels</h4>
           </div>
-          <AddIcon className="sidebar__addChannel" />
+          <AddIcon onClick={addChannel} className="sidebar__addChannel" />
         </div>
         <div className="sidebar__channelsList">
-          {channels.map((channel) => {
-            <SidebarChannel />;
+          {channels.map(({ id, channel }) => {
+            return (
+              <SidebarChannel
+                key={id}
+                id={id}
+                channelName={channel.channelName}
+              />
+            );
           })}
         </div>
       </div>
